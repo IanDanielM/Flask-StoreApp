@@ -107,7 +107,7 @@ variation_properties = db.Table('variation_properties',
 class Variation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    price = db.Column(db.Float, nullable=False)
+    price = db.Column(db.Float, nullable=False) #ADD QUANTITY,IMAGE3
     product_id = db.Column(db.Integer, db.ForeignKey(
         'product.id'), nullable=False)
     properties = db.relationship('Property', secondary=variation_properties, lazy='subquery',
@@ -121,7 +121,7 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text)
-    price = db.Column(db.Float, nullable=False)
+    price = db.Column(db.Float, nullable=False)  #ADD QUANTITY,IMAGE3
     variations = db.relationship('Variation', backref='product', lazy=True)
     properties = db.relationship('Property', secondary=product_properties, lazy='subquery',
                                  backref=db.backref('products', lazy=True))
@@ -184,7 +184,7 @@ class Cart(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey(
         'product.id'), nullable=False)
     variation_id = db.Column(db.Integer, db.ForeignKey(
-        'variation.id'), nullable=False)
+        'variation.id'), nullable=False) #NULLABLETRUE
     quantity = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
