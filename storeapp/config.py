@@ -10,7 +10,7 @@ host = os.getenv('HOST')
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY')
     basedir = os.path.abspath(os.path.dirname(__file__))
-    SQLALCHEMY_DATABASE_URI = f'postgresql://{username}:{password}@{host}:5432/{db}'
+    SQLALCHEMY_DATABASE_URI = f'postgresql://{username}:{password}@localhost:5432/{db}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_SERVER='smtp.gmail.com'
     MAIL_PORT = 587

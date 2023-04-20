@@ -24,6 +24,8 @@ class User(db.Model, UserMixin):
     country = db.Column(db.String(50), nullable=True)
     town = db.Column(db.String(50), nullable=True)
     confirmed = db.Column(db.Boolean, nullable=False, default=False)
+    is_seller = db.Column(db.Boolean, nullable=False, default=False)
+    is_admin = db.Column(db.Boolean, nullable=False, default=False)
     products = db.relationship('Product', backref='user', lazy=True)
 
     def get_confirm_token(self, expires_sec=10000):
@@ -55,7 +57,7 @@ class User(db.Model, UserMixin):
         except:
             return None
         return User.query.filter_by(username=username).first()
-    
+        
     
     def is_admin(self):
         return self.role == 'admin'
@@ -80,12 +82,19 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f'<User {self.username}>'
 
+class Category(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String(200))
+    image =  db.Column(db.String(50), nullable=False,
+                           default='category.jpg')
+    products = db.relationship('Product', backref='category')
+
 
 class Property(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     value = db.Column(db.String(50), nullable=False)
-
 
 # Association table to link properties to products
 product_properties = db.Table('product_properties',
@@ -94,7 +103,6 @@ product_properties = db.Table('product_properties',
                               db.Column('property_id', db.Integer, db.ForeignKey(
                                   'property.id'), primary_key=True)
                               )
-
 # Association table to link properties to variations
 variation_properties = db.Table('variation_properties',
                                 db.Column('variation_id', db.Integer, db.ForeignKey(
@@ -103,11 +111,17 @@ variation_properties = db.Table('variation_properties',
                                     'property.id'), primary_key=True)
                                 )
 
-
 class Variation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    price = db.Column(db.Float, nullable=False) #ADD QUANTITY,IMAGE3
+    price = db.Column(db.Float, nullable=False)
+    quantity = db.Column(db.Integer, nullable=False, default=0)
+    Image1= db.Column(db.String(50), nullable=False,
+                           default='product.jpg')
+    Image2= db.Column(db.String(50), nullable=False,
+                           default='product.jpg')
+    Image3= db.Column(db.String(50), nullable=False,
+                           default='product.jpg') #ADD QUANTITY,IMAGE3
     product_id = db.Column(db.Integer, db.ForeignKey(
         'product.id'), nullable=False)
     properties = db.relationship('Property', secondary=variation_properties, lazy='subquery',
@@ -121,18 +135,20 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text)
-    price = db.Column(db.Float, nullable=False)  #ADD QUANTITY,IMAGE3
+    price = db.Column(db.Float, nullable=False)
+    quantity = db.Column(db.Integer, nullable=False, default=0)
+    Image1= db.Column(db.String(50), nullable=False,
+                           default='product.jpg')
+    Image2= db.Column(db.String(50), nullable=True,
+                           default='product.jpg')
+    Image3= db.Column(db.String(50), nullable=True,
+                           default='product.jpg')
     variations = db.relationship('Variation', backref='product', lazy=True)
     properties = db.relationship('Property', secondary=product_properties, lazy='subquery',
                                  backref=db.backref('products', lazy=True))
-    product_type = db.Column(
-        db.String(20), nullable=False, server_default='physical')
-    __table_args__ = (
-        CheckConstraint(product_type.in_(
-            ('physical', 'digital')), name='valid_product_type'),
-    )
+    product_type = db.Column(db.String(20), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
+    categoryid = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
     def __repr__(self):
         return f'<Product {self.name}>'
 

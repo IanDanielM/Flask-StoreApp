@@ -63,7 +63,10 @@ def login():
             if next_page:
                 return redirect(next_page) if next_page else redirect(url_for('main.index'))
             flash('You have been logged in!', 'success')
-            return redirect(url_for('main.index'))
+            if user.is_seller():
+                return redirect(url_for('sellers.dashboard'))
+            else:
+                 return redirect(url_for('main.index'))  
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')          
     return render_template('users/login.html',form=form)
@@ -127,6 +130,8 @@ def account():
     image_file = url_for('static', filename='uploads/user-profiles/' +
                          current_user.image_file)  # type: ignore
     return render_template('users/account.html', title='Account', image_file=image_file, form=form)
+
+
 
     
 

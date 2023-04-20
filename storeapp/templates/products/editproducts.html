@@ -1,0 +1,94 @@
+{%extends 'base.html'%}
+{%block content%}
+<h1>Edit Product</h1>
+
+{% for error in form.errors %}
+    <span>{{ error }} ss</span>
+{% endfor %}
+<form action="" method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group">
+        <div class="form-group">
+            {{ form.productname.label(class="form-control-label") }}
+            {% if form.productname.errors %}
+                {{ form.productname(class="form-control form-control-lg is-invalid") }}
+                {% for error in form.productname.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            {% else %}
+                {{ form.productname(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+          <div class="form-group">
+              {{ form.productprice.label(class="form-control-label") }}
+              {% if form.productprice.errors %}
+              {{ form.productprice(class="form-control form-control-lg is-invalid") }}
+              {% for error in form.productprice.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+              {% else %}
+              {{ form.productprice(class="form-control form-control-lg") }}
+              {% endif %}
+          </div>
+          <div class="form-group">
+            {{ form.productdescription.label(class="form-control-label") }}
+            {% if form.productdescription.errors %}
+            {{ form.productdescription(class="form-control form-control-lg is-invalid") }}
+            {% for error in form.productdescription.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+            {% else %}
+            {{ form.productdescription(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.productQuantity.label(class="form-control-label") }}
+            {% if form.productQuantity.errors %}
+            {{ form.productQuantity(class="form-control form-control-lg is-invalid") }}
+            {% for error in form.productQuantity.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+            {% else %}
+            {{ form.productQuantity(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.productcategory.label(class="form-control-label") }}
+            {% if form.productcategory.errors %}
+            {{ form.productcategory(class="form-control form-control-lg is-invalid") }}
+            {% for error in form.productcategory.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+            {% else %}
+            {{ form.productcategory(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.product_type.label(class="form-control-label") }}
+            {% if form.product_type.errors %}
+            {{ form.product_type(class="form-control form-control-lg is-invalid") }}
+            {% for error in form.product_type.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+            {% else %}
+            {{ form.product_type(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+    
+        <div class="form-group">
+            {{ form.product_image.label() }}
+            {% if form.product_image.errors %}
+            {{ form.product_image(class="form-control-file is-invalid") }}
+            {% for error in form.product_image.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+            {% else %}
+            {{ form.product_image(class="form-control-file") }}
+            {% endif %}
+        </div> 
+  </fieldset>
+  <button type="submit" class="form-group">
+   Update Product
+  </button>
+  </form>
+{%endblock%}
