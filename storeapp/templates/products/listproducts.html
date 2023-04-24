@@ -1,0 +1,108 @@
+{%extends 'base.html'%}
+
+{%block head%} {{ super() }}
+
+<style>
+  .card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin: 15px;
+  }
+  .product-image {
+    width: 100%;
+    height: 150px;
+    /* or any other fixed height you prefer */
+    object-fit: cover;
+    /* to make sure the image fills the container without distorting its aspect ratio */
+  }
+
+  .card-img-tiles>.inner {
+    display: table;
+    width: 100%;
+  }
+
+  .card-img-tiles .main-img,
+  .card-img-tiles .thumblist {
+    display: table-cell;
+    width: 65%;
+    padding: 15px;
+    vertical-align: middle;
+  }
+
+  .card-img-tiles .main-img>img:last-child,
+  .card-img-tiles .thumblist>img:last-child {
+    margin-bottom: 0;
+  }
+
+  .card-img-tiles .main-img>img,
+  .card-img-tiles .thumblist>img {
+    display: block;
+    width: 100%;
+    margin-bottom: 6px;
+  }
+
+  .btn-group-sm>.btn,
+  .btn-sm {
+    padding: 0.45rem 0.5rem !important;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+  }
+
+  .button {
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 16px;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    margin: 4px 2px;
+  }
+</style>
+
+{% endblock %}
+{% block content %}
+<h1>Products</h1>
+{% if products %}
+<div class="container">
+  <div class="row">
+    {% for product in products %}
+    <div class="col-md-4 col-sm-6">
+      <div class="card mb-30">
+        <a class="card-img-tiles" href="#" data-abc="true">
+          <div class="inner">
+            <div class="main-img">
+              {% if product.Image1 %}
+              <img src="{{ url_for('static', filename='uploads/products/' + product.Image1) }}"
+                alt="{{ product.name }}" />
+              {% endif %}
+            </div>
+          </div>
+        </a>
+        <div class="card-body text-center">
+          <h4 class="card-title">{{ product.name }}</h4>
+          <p class="text-muted">{{ product.price }}</p>
+          <a class="btn btn-outline-primary btn-sm" href="#" data-abc="true">View Product</a>
+          {% if current_user.is_authenticated and current_user.role == 'seller' %}
+          <a class="btn btn-outline-secondary btn-sm"
+          href="{{url_for('product.edit_product', id=product.id)}}" data-abc="true">
+          <i class="fas fa-edit"></i>
+            </a>
+        <a class="btn btn-outline-danger btn-sm" href="{{url_for('product.delete_product', id=product.id)}}"
+          data-abc="true"><i class="fas fa-trash"></i></a>
+          {%endif%}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+<p>No products found.</p>
+{% endif %}
+{% endblock %}

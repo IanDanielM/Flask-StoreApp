@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Confirm Your Email Address</h1>
+    <p>Please enter the email address associated with your account to receive a confirmation email.</p>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <form method="post">
+        {{ form.csrf_token }}
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email(size=30) }}<br>
+            {% for error in form.email.errors %}
+                <span style="color: red;">[{{ error }}]</span><br>
+            {% endfor %}
+        </p>
+        <p><input type="submit" value="Send Confirmation Email"></p>
+    </form>
+{% endblock %}
