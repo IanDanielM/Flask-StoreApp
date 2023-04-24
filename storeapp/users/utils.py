@@ -8,7 +8,7 @@ from PIL import Image
 def send_confirmation_email(user):
     token = user.get_confirm_token()
     print("the token is",token)
-    msg = Message('Email Confirmation', sender='iandan@874@gmail.com', recipients=[user.email])
+    msg = Message('Email Confirmation', sender='youngman@gmail.com', recipients=[user.email])
     print(msg)
     msg.body = f'''To confirm you account, visit the following link:
                     {url_for('users.confirm_mail', token=token, _external=True)}
@@ -18,7 +18,7 @@ def send_confirmation_email(user):
 
 def send_reset_email(user):
     token = user.get_reset_token()
-    msg = Message('Password Reset Request', sender='iandan@874@gmail.com', recipients=[user.email])
+    msg = Message('Password Reset Request', sender='youngman@gmail.com', recipients=[user.email])
     msg.body = f'''To reset the password to your account, visit the following link:
                     {url_for('users.reset_token', token=token, _external=True)}
                     '''             
