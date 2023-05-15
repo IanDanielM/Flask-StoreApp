@@ -66,7 +66,7 @@ def login():
             if user.is_seller():
                 return redirect(url_for('sellers.dashboard'))
             else:
-                 return redirect(url_for('main.index'))  
+                 return redirect(url_for('product.ProductsListView'))  
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')          
     return render_template('users/login.html',form=form)
@@ -86,7 +86,7 @@ def reset_request():
 @users.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
     if current_user.is_authenticated: # type: ignore
-        return redirect(url_for('main.home'))
+        return redirect(url_for('product.ProductsListView'))
     user = User.verify_reset_token(token)
 
     print("the user is------------",user)

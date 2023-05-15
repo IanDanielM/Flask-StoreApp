@@ -1,0 +1,90 @@
+{%extends 'base.html'%}
+
+{%block head%} {{ super() }}
+<style>
+    main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Apply styles to the product view container */
+/* Apply styles to the product view container */
+/* Apply styles to the product view container */
+.product-view {
+    display: flex;
+    align-items: center;
+}
+
+/* Apply styles to the product image container */
+.product-image {
+    flex: 1;
+}
+
+/* Apply styles to the product image */
+.product-image img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* Apply styles to the product details container */
+.product-details {
+    flex: 2;
+    margin-left: 20px;
+}
+
+/* Apply styles to the product name */
+.product-details h1 {
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+/* Apply styles to the product description */
+.product-details p {
+    margin-bottom: 10px;
+}
+
+/* Apply styles to the product price */
+.product-details p:last-of-type {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+/* Apply styles to the add to cart button */
+.product-details button {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+
+</style>
+{% endblock %}
+{% block content %}
+<main>
+	<div class="product-view">
+		<div class="product-image">
+			<img src="{{ url_for('static', filename='uploads/products/' + product.Image1) }}" alt="Product Image">
+		</div>
+		<div class="product-details">
+			<h1>{{product.name}}</h1>
+			<p>Description of product.</p>
+        <p>
+            {{product.description}}
+        </p>
+			<p>Price: ${{product.price}}</p>
+			<form action="" method="post">
+				<input type="hidden" name="product_id" value="product-id">
+				<button type="submit">Add to Cart</button>
+			</form>
+		</div>
+	</div>
+</main>
+{% endblock %}

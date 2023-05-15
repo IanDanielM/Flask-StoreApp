@@ -3,3 +3,7 @@
 __pycache__
 .vscode
 migrations
+storeapp/order
+storeapp/payment
+
+

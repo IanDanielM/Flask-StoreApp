@@ -10,10 +10,15 @@ from flask_login import login_required,current_user
 product = Blueprint('product', __name__)
 
 
-@product.route('/products')
+@product.route('/')
 def ProductsListView():
     products = Product.query.all()
     return render_template('products/listproducts.html',products=products)
+
+@product.route('/products/<int:id>')
+def productView(id):
+    product = Product.query.get_or_404(id)
+    return render_template('products/product.html',product=product)
 
 @product.route('/seller/products/add',methods=['GET','POST'])
 @login_required
